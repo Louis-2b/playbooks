@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: Remove Apache and MariaDB
+     package:
+       name:
+         - httpd
+         - mariadb-server
+       state: absent
