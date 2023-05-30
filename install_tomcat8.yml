@@ -5,12 +5,9 @@
   tasks:
   - name: Create directory
     file:
-      path: "{{items}}" 
+      path: "/home/diegosoda/oracle" 
       state: directory
-      mode: 0755
-    with_items:
-      - /home/diegosoda/oracle
-      - /home/diegosoda/tomcat8        
+      mode: 0755        
 
   - name: Download openjdk
     unarchive:
@@ -21,7 +18,13 @@
   - name: Install Java
     dnf:
       name: java-20.0.1-openjdk
-      state: present    
+      state: present
+
+  - name: Create directory
+    file:
+      path: "/home/diegosoda/tomcat8"
+      state: directory
+      mode: 0755
 
   - name: Download and install tomcat
     unarchive:
