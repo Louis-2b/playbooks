@@ -6,7 +6,7 @@
   - name: Install Java
     dnf:
       name: Java-1.8.0-openjdk-devel
-      state: latest
+      state: present
 
   - name: Create a direcory
     file:
