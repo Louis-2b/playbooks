@@ -4,14 +4,10 @@
 
   tasks:
   - name: Add adoptopenjdk repository
-    get_url:
-      url: "https://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/8/adoptopenjdk.repo"
-      dest: "/etc/yum.repos.d/adoptopenjdk.repo"
-
-  - name: Install OpenJDK
-    package:
-      name: adoptopenjdk-11-hotspot
-      state: latest
+    unarchive:
+      src: "https://download.java.net/java/GA/jdk20.0.1/b4887098932d415489976708ad6d1a4b/9/GPL/openjdk-20.0.1_linux-x64_bin.tar.gz"
+      dest: "/etc/yum.repos.d/"
+      remote_src: yes
 
   - name: Create a direcory
     file:
