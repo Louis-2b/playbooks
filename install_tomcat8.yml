@@ -3,17 +3,25 @@
   become: true
 
   tasks:
-  - name: Add adoptopenjdk repository
-    unarchive:
-      src: "https://download.java.net/java/GA/jdk20.0.1/b4887098932d415489976708ad6d1a4b/9/GPL/openjdk-20.0.1_linux-x64_bin.tar.gz"
-      dest: "/etc/yum.repos.d/"
-      remote_src: yes
-
-  - name: Create a direcory
+  - name: Create directory
     file:
-      path: "/home/diegosoda/tomcat8"
+      path: "{{items}}" 
       state: directory
       mode: 0755
+    with_items:
+      - /home/diegosoda/oracle
+      - /home/diegosoda/tomcat8        
+
+  - name: Download openjdk
+    unarchive:
+      src: "https://download.java.net/java/GA/jdk20.0.1/b4887098932d415489976708ad6d1a4b/9/GPL/openjdk-20.0.1_linux-x64_bin.tar.gz"
+      dest: "/home/diegosoda/oracle"
+      remote_src: yes
+
+  - name: Install Java
+    dnf:
+      name: java-20.0.1-openjdk
+      state: present    
 
   - name: Download and install tomcat
     unarchive:
