@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+  - name: Install Java
+    dnf:
+      name: Java-1.8.0-openjdk-devel
+      state: latest
+
+  - name: Create a direcory
+    file:
+      path: "/home/diegosoda/tomcat8"
+      state: directory
+      mode: 0755
+
+  - name: Download and install tomcat
+    unarchive:
+      src: "https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.89/bin/apache-tomcat-8.5.89.tar.gz"
+      dest: "/home/diegosoda/tomcat8"
+      remote_src: yes
+      mode: 0755
+
+  - name: Start the tomcat instance
+    shell:
+      "./startup.sh"
+    args:
+      chdir: "/home/diegosoda/tomcat8/apache-tomcat-8.5.89/bin"
