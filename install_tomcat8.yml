@@ -3,16 +3,16 @@
   become: true
 
   tasks:
-  - name: Create directory
+  - name: Create a directory
     file:
-      path: "/home/diegosoda/oracle" 
+      path: "/opt/oracle" 
       state: directory
       mode: 0755        
 
   - name: Download openjdk
     unarchive:
       src: "https://download.java.net/java/GA/jdk20.0.1/b4887098932d415489976708ad6d1a4b/9/GPL/openjdk-20.0.1_linux-x64_bin.tar.gz"
-      dest: "/home/diegosoda/oracle"
+      dest: "/opt/oracle"
       remote_src: yes
 
   - name: Install Java
@@ -20,16 +20,16 @@
       name: java-17-openjdk-devel
       state: present
 
-  - name: Create directory
+  - name: Create a directory
     file:
-      path: "/home/diegosoda/tomcat8"
+      path: "/opt/tomcat"
       state: directory
       mode: 0755
 
   - name: Download and install tomcat
     unarchive:
       src: "https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.89/bin/apache-tomcat-8.5.89.tar.gz"
-      dest: "/home/diegosoda/tomcat8"
+      dest: "/opt/tomcat"
       remote_src: yes
       mode: 0755
 
@@ -37,4 +37,4 @@
     shell:
       "./startup.sh"
     args:
-      chdir: "/home/diegosoda/tomcat8/apache-tomcat-8.5.89/bin"
+      chdir: "/opt/tomcat/apache-tomcat-8.5.89/bin"
