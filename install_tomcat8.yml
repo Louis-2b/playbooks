@@ -23,17 +23,20 @@
   - name: Create a directory
     file:
       path: "/opt/tomcat"
+      owner: diegosoda
+      group: diegosoda
       mode: 0755
       state: directory
 
   - name: Download and install tomcat
     unarchive:
-      src: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75-deployer.tar.gz"
+      src: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75.tar.gz"
       dest: "/opt/tomcat"
       remote_src: yes
       mode: 0755
 
   - name: Start the tomcat instance
     shell:
-      cmd: "./startup.sh"
+      "./startup.sh"
+    args:  
       chdir: "/opt/tomcat/apache-tomcat-9.0.75/bin"
