@@ -35,6 +35,5 @@
 
   - name: Start the tomcat instance
     shell:
-      "./startup.sh"
-    args:
+      cmd: "./startup.sh"
       chdir: "/opt/tomcat/apache-tomcat-9.0.75/bin"
