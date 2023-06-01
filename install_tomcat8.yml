@@ -5,9 +5,11 @@
   tasks:
   - name: Create a directory
     file:
-      path: "/opt/oracle" 
-      state: directory
-      mode: 0755        
+      path: "/opt/oracle"
+      owner: oracle
+      group: oracle
+      mode: 0755 
+      state: directory        
 
   - name: Download openjdk
     unarchive:
@@ -23,12 +25,14 @@
   - name: Create a directory
     file:
       path: "/opt/tomcat"
-      state: directory
+      owner: tomcat
+      group: tomcat
       mode: 0755
+      state: directory
 
   - name: Download and install tomcat
     unarchive:
-      src: "https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.89/bin/apache-tomcat-8.5.89.tar.gz"
+      src: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75-deployer.tar.gz"
       dest: "/opt/tomcat"
       remote_src: yes
       mode: 0755
@@ -37,4 +41,4 @@
     shell:
       "./startup.sh"
     args:
-      chdir: "/opt/tomcat/apache-tomcat-8.5.89/bin"
+      chdir: "/opt/tomcat/apache-tomcat-9.0.75/bin"
