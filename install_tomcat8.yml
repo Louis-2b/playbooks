@@ -23,8 +23,8 @@
   - name: Create a directory
     file:
       path: "/opt/tomcat"
-      owner: tomcat
-      group: tomcat
+      owner: diegosoda
+      group: diegosoda
       mode: 0755
       state: directory
 
