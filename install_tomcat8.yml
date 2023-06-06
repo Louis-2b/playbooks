@@ -49,7 +49,6 @@
      command:
        cmd: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
        become_user: tomcat
-       become: true
 
    - name: Creating a service file
      copy:
