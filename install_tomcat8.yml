@@ -45,8 +45,6 @@
   - name: Move file to the /opt/tomcat9 directory
     become_user: tomcat
     shell: "mv /opt/tomcat9/apache-tomcat-9.0.75/* /opt/tomcat9"
-    args:
-      warn: no
 
   - name: Creating a service file
     copy:
