@@ -24,9 +24,6 @@
      user:
        name: tomcat
        state: present
-       group: tomcat
-       shell: /bin/bash
-       create_home: false
 
    - name: Create a Directory
      file:
@@ -46,10 +43,9 @@
        owner: tomcat
 
    - name: Move file to the /opt/tomcat9 directory
-     shell:
-       cmd: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
-       become: true
-       become_user: tomcat
+     shell: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
+     become: true
+     become_user: tomcat
 
    - name: Creating a service file
      copy:
