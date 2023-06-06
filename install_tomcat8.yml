@@ -5,85 +5,85 @@
     download_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75.tar.gz
 
   tasks:
-  - name: Download OpenJDK
-    dnf:
-      name: java-11-openjdk
-      update_cache: yes 
-      state: present       
+   - name: Download OpenJDK
+     dnf:
+       name: java-11-openjdk
+       update_cache: yes 
+       state: present       
 
-  - name: Validate if Java is availble
-    shell:
-      java -version
+   - name: Validate if Java is availble
+     shell:
+       java -version
 
-  - name: Create the group
-    group:
-      name: tomcat
-      state: present
+   - name: Create the group
+     group:
+       name: tomcat
+       state: present
 
-  - name: Create the user
-    user:
-      name: tomcat
-      state: present
+   - name: Create the user
+     user:
+       name: tomcat
+       state: present
 
-  - name: Create a Directory
-    file:
-      path: /opt/tomcat9
-      state: directory
-      mode: 0755
-      owner: tomcat
-      group: tomcat
+   - name: Create a Directory
+     file:
+       path: /opt/tomcat9
+       state: directory
+       mode: 0755
+       owner: tomcat
+       group: tomcat
 
-  - name: Download Tomcat using unarchive
-    unarchive:
-      src: "{{download_url}}" 
-      dest: /opt/tomcat9  
-      mode: 0755
-      remote_src: yes
-      group: tomcat
-      owner: tomcat
+   - name: Download Tomcat using unarchive
+     unarchive:
+       src: "{{download_url}}" 
+       dest: /opt/tomcat9  
+       mode: 0755
+       remote_src: yes
+       group: tomcat
+       owner: tomcat
 
-  - name: Move file to the /opt/tomcat9 directory
-    become_user: tomcat
-    shell: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
+   - name: Move file to the /opt/tomcat9 directory
+     become_user: tomcat
+     shell: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
 
-  - name: Creating a service file
-    copy:
-      dest: /etc/systemd/system/tomcat.service
-      content: |-
-        [Unit]
-        Description=Tomcat Service
-        Requires=network.target
-        After=network.target
+   - name: Creating a service file
+     copy:
+       dest: /etc/systemd/system/tomcat.service
+       content: |-
+         [Unit]
+         Description=Tomcat Service
+         Requires=network.target
+         After=network.target
 
-        [Service]
-        Type=forking
-        User=tomcat
-        Environment="CATALINA_PID=/opt/tomcat9/logs/tomcat.pid"
-        Environment="CATALINA_BASE=/opt/tomcat9"
-        Environment="CATALINA_HOME=/opt/tomcat9"
-        Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
-        ExecStart=/opt/tomcat9/bin/startup.sh
-        ExecStop=/opt/tomcat9/bin/shutdown.sh
-        Restart=on-abnormal
+         [Service]
+         Type=forking
+         User=tomcat
+         Environment="CATALINA_PID=/opt/tomcat9/logs/tomcat.pid"
+         Environment="CATALINA_BASE=/opt/tomcat9"
+         Environment="CATALINA_HOME=/opt/tomcat9"
+         Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+         ExecStart=/opt/tomcat9/bin/startup.sh
+         ExecStop=/opt/tomcat9/bin/shutdown.sh
+         Restart=on-abnormal
 
-        [Install]
-        WantedBy=multi-user.target
+         [Install]
+         WantedBy=multi-user.target
 
-  - name: Reload the systemd to re-read configurations
-    systemd:
-      daemon-reload: yes
+   - name: Reload the systemd to re-read configurations
+     systemd:
+       daemon-reload: yes
 
-  - name: Enable the tomcat service and start
-    systemd:
-      name: tomcat
-      enabled: yes
-      state: started
+   - name: Enable the tomcat service and start
+     systemd:
+       name: tomcat
+       enabled: yes
+       state: started
 
-  - name: Check the tomcat server status
-    tags: test
-    uri:
-      url: http://localhost:8080
-    register: result
-    until: "result.status == 200"
-    retries: 5
-    delay: 10
+   - name: Check the tomcat server status
+     tags: test
+     uri:
+       url: http://localhost:8080
+     register: result
+     until: "result.status == 200"
+     retries: 5
+     delay: 10
