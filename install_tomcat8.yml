@@ -46,8 +46,9 @@
        owner: tomcat
 
    - name: Move file to the /opt/tomcat9 directory
-     command:
+     shell:
        cmd: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
+       become: true
        become_user: tomcat
 
    - name: Creating a service file
