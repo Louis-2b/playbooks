@@ -29,7 +29,7 @@
     file:
       path: /opt/tomcat9
       state: directory
-      mode: 755
+      mode: 0755
       owner: tomcat
       group: tomcat
 
@@ -37,7 +37,7 @@
     unarchive:
       src: "{{download_url}}" 
       dest: /opt/tomcat9  
-      mode: 755
+      mode: 0755
       remote_src: yes
       group: tomcat
       owner: tomcat
