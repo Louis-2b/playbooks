@@ -13,7 +13,7 @@
 
    - name: Validate if Java is availble
      shell:
-       java -version
+       cmd: java -version
 
    - name: Create the group
      group:
@@ -24,6 +24,9 @@
      user:
        name: tomcat
        state: present
+       group: tomcat
+       shell: /bin/bash
+       create_home: false
 
    - name: Create a Directory
      file:
@@ -43,9 +46,13 @@
        owner: tomcat
 
    - name: Move file to the /opt/tomcat9 directory
-     become: true
-     become_user: tomcat
      shell: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
+     args:
+       executable: /bin/bash
+       creates: /opt/tomcat9/bin/startup.sh
+       chdir: /opt/tomcat9
+       become: true
+       become_user: tomcat
 
    - name: Creating a service file
      copy:
