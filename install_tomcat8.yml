@@ -47,8 +47,9 @@
 
    - name: Move file to the /opt/tomcat9 directory
      command:
-       cmd: "mv /opt/tomcat9/apache-tomcat-9.0.75/* /opt/tomcat9"
-       creates: /opt/tomcat9/bin/startup.sh
+       cmd: "mv /opt/tomcat9/apache-tomcat-9.0.75*/* /opt/tomcat9"
+       become_user: tomcat
+       become: true
 
    - name: Creating a service file
      copy:
