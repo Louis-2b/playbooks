@@ -83,7 +83,7 @@
     tags: test
     uri:
       url: http://localhost:8080
-    registeri: result
+    register: result
     until: "result.status == 200"
     retries: 5
     delay: 10%    
