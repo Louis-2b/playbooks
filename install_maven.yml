@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: true
+  vars: 
+    download_url: https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
+
+  tasks:
+   - name: Create the group
+     group:
+       name: maven
+       state: present
+            
+   - name: Download Maven using unarchive
+     unarchive:
+       src: "{{download_url}}"
+       dest: /opt/maven
+       mode: 0755
+       remote_src: yes
+       group: maven
+       owner: maven
+
+   - name: Move file to the /opt/maven directory
+     shell: "mv /opt/maven/apache-maven-3.9.2*/* /opt/maven"
+
+   - name: Update profile
+     copy:
+       content: 'export M2_HOME=/opt/maven'
+       dest: /etc/profile.d/maven.sh
+
+   - lineinfile:
+       path: /etc/profile.d/maven.sh
+       line: 'export PATH=${M2_HOME}/bin:${PATH}'
+
+   - name: Source profile
+     command: source /etc/profile.d/maven.sh
+     args:
+       creates: /tmp/maven_sourced
+
+
