@@ -34,7 +34,7 @@
 
    - name: Wait for Jenkins to be accessible
      uri:
-       url: http://locolhost:195
+       url: http://localhost:195
      register: jenkins_response
      until: "jenkins_response.status == 200"
      retries: 10
