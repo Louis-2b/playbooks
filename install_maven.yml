@@ -8,7 +8,12 @@
    - name: Create the group
      group:
        name: maven
-       state: present
+       state: absent
+
+   - name: Create directory
+     file:
+       path: /opt/maven
+       state: directory    
             
    - name: Download Maven using unarchive
      unarchive:
