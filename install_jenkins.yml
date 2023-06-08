@@ -29,6 +29,7 @@
      service:
        name: jenkins
        state: started
+       daemon-reload: yes 
        enabled: true
 
    - name: Wait for Jenkins to be accessible
