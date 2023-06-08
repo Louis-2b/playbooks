@@ -19,10 +19,7 @@
      unarchive:
        src: "{{download_url}}"
        dest: /opt/maven
-       mode: 0755
        remote_src: yes
-       group: maven
-       owner: maven
 
    - name: Move file to the /opt/maven directory
      shell: "mv /opt/maven/apache-maven-3.9.2*/* /opt/maven"
