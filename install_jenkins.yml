@@ -2,8 +2,8 @@
 - hosts: all
   become: true
   vars:
-    repo_url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
-    repo_key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    repo_url: https://pkg.jenkins.io/redhat-stable
+    repo_key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 
   tasks:
    - name: Add Jenkins repository
