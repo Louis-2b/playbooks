@@ -34,8 +34,4 @@
        line: 'export PATH=${M2_HOME}/bin:${PATH}'
 
    - name: Source profile
-     command: source /etc/profile.d/maven.sh
-     args:
-       creates: /tmp/maven_sourced
-
-
+     shell: source /etc/profile.d/maven.sh
