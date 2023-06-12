@@ -4,7 +4,8 @@
   tasks:
    - name: Install Apache and MariaDB
      dnf:
-       name: 
+       name:      
+         - "*"     
          - httpd
          - mariadb-server  
        state: latest
