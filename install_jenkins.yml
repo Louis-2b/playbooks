@@ -2,18 +2,24 @@
 - hosts: all
   become: true
   vars:
-    repo_url: https://pkg.jenkins.io/redhat-stable
+    repo_url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
     repo_key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 
   tasks:
    - name: Add Jenkins repository
-     yum_repository:
-       name: jenkins
-       description: Jenkins Repository
-       baseurl: "{{repo_url}}"
-       gpgcheck: true
-       gpgkey: "{{repo_key}}"
-       enabled: true
+     get_url:
+       url: "{{repo_url}}"
+       dest: /etc/yum.repos.d/jenkins.repo
+
+   - name: Import jenkins key from url
+     rpm_key:
+       state: present
+       key: "{{repo_key}}"
+
+   - name: Upgrade all packages
+     dnf:
+       name: "*"
+       state: latest        
 
    - name: Install Java
      dnf:
@@ -23,14 +29,13 @@
    - name: Install Jenkins
      dnf:
        name: jenkins
-       state: present
+       state: latest
 
-   - name: Start Jenkins service
-     service:
+   - name: Start Jenkins
+     systemd:
+       daemon-reload: yes     
        name: jenkins
        state: started
-       daemon-reload: yes 
-       enabled: true
 
    - name: Wait for Jenkins to be accessible
      uri:
