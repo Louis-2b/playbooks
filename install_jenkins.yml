@@ -37,14 +37,6 @@
        name: jenkins
        state: started
 
-   - name: Wait for Jenkins to be accessible
-     uri:
-       url: http://localhost:8080/
-     register: jenkins_response
-     until: "jenkins_response.status == 200"
-     retries: 10
-     delay: 10
-
    - name: Display initial Jenkins password
      shell: cat /var/lib/jenkins/secrets/initialAdminPassword
      register: jenkins_password
@@ -52,5 +44,4 @@
 
    - name: Display initial Jenkins password
      debug:
-       var: jenkins_password.stdout_lines  
-
+       var: jenkins_password.stdout_lines
