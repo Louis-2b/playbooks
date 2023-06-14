@@ -13,13 +13,14 @@
 
    - name: Install required packages
      yum:
-       name: "{{items}}"
-       state: latest
-     with_items:
-       - yum-utils
-       - device-mapper-persistent-data
-       - lvm2
-       - epel-release
+       name: "{{ packages }}"
+       state: present
+     vars:
+       packages:
+         - yum-utils
+         - device-mapper-persistent-data
+         - lvm2
+         - epel-release
 
    - name: Add officiel docker GPG key
      rpm_key:
