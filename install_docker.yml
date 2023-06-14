@@ -39,15 +39,6 @@
        enabled: yes
 
    - name: Install docker-compose
-     command: >
-       curl -l "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" 
-       -o /usr/local/bin/docker-compose
-     args:
-       creates: /usr/local/bin/docker-compose
-
-   - name: Set execute permissions for Docker Compose
-     file:
-       path: /usr/local/bin/docker-compose
-       mode: 'u+x'
-
-          
+     dnf:
+       name: docker-compose-plugin
+       state: latest   
