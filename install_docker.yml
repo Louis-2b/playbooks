@@ -6,11 +6,6 @@
     repo_key: https://download.docker.com/linux/centos/gpg
 
   tasks:
-   - name: Upgrade all packages
-     dnf:
-       name: "*"
-       state: latest
-
    - name: Install required packages
      yum:
        name: "{{ packages }}"
