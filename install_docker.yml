@@ -25,7 +25,7 @@
    - name: Add officiel docker GPG key
      rpm_key:
        key: "{{repo_key}}"
-       state: latest
+       state: present
 
    - name: Add docker repo
      get_url:
