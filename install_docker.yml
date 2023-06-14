@@ -28,7 +28,7 @@
        dest: /etc/yum.repos.d/docer-ce.repo
 
    - name: Install docker CE
-     dnf:
+     yum:
        name: docker-ce
        state: latest
 
